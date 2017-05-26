@@ -44,7 +44,7 @@ class HXScaleView: UIView {
         return label
     }()
     
-    //进度layer
+    //遮盖layer
     lazy var progressLayer: CAShapeLayer = {
         let bezierPath = UIBezierPath.init(arcCenter: self.center, radius: 115, startAngle: -(CGFloat.pi), endAngle: 0, clockwise: true)
         let proLayer = CAShapeLayer.init()
@@ -57,7 +57,7 @@ class HXScaleView: UIView {
         return proLayer
     }()
     
-    //遮盖layer
+    //进度layer
     lazy var gradientLayer: CAGradientLayer = {
         let graLayer = CAGradientLayer.init()
         graLayer.frame = self.bounds
@@ -77,11 +77,19 @@ class HXScaleView: UIView {
     //init
     override init(frame : CGRect){
         super.init(frame: frame)
+        //添加遮盖Layer
         layer.addSublayer(progressLayer)
+        
+        //设置进度Layer的遮盖
         gradientLayer.mask = progressLayer
+        //添加进度Layer
         layer.addSublayer(gradientLayer)
+        
+        //添加两条白色边框
         drawCurveRadius(radius: 147.5)
         drawCurveRadius(radius: 82.5)
+        
+        //添加中间的数值Label
         addSubview(valueLabel)
     }
     
